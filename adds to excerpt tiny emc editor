@@ -3,11 +3,6 @@
  */
 class T5_Richtext_Excerpt
 {
-    /**
-     * Replaces the meta boxes.
-     *
-     * @return void
-     */
     public static function switch_boxes()
     {
         if ( ! post_type_supports( $GLOBALS['post']->post_type, 'excerpt' ) )
@@ -17,8 +12,8 @@ class T5_Richtext_Excerpt
 
         remove_meta_box(
             'postexcerpt'
-        ,   ''            
-        ,   'normal'      
+        ,   ''
+        ,   'normal'
         );
 
         add_meta_box(
