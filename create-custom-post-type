@@ -1,0 +1,44 @@
+add_action('init', function() {
+	register_post_type('product', [
+		'label' => __('Products', 'generatepress_child'),
+		'public' => true,
+		'menu_position' => 5,
+		'menu_icon' => 'dashicons-clipboard',
+		'supports' => ['title', 'editor', 'thumbnail', 'author', 'revisions', 'comments'],
+		'show_in_rest' => true,
+		'rewrite' => ['slug' => 'product'],
+		'taxonomies' => ['product_author', 'product_category'],
+		'labels' => [
+			'singular_name' => __('Product', 'generatepress_child'),
+			'add_new_item' => __('Add new product', 'generatepress_child'),
+			'new_item' => __('New product', 'generatepress_child'),
+			'view_item' => __('View product', 'generatepress_child'),
+			'not_found' => __('No products found', 'generatepress_child'),
+			'not_found_in_trash' => __('No products found in trash', 'generatepress_child'),
+			'all_items' => __('All products', 'generatepress_child'),
+			'insert_into_item' => __('Insert into product', 'generatepress_child')
+		],		
+	]);
+ 
+	register_taxonomy('product_category', ['product'], [
+		'label' => __('Categories', 'generatepress_child'),
+		'hierarchical' => true,
+		'rewrite' => ['slug' => 'product-category'],
+		'show_admin_column' => true,
+		'show_in_rest' => true,
+		'labels' => [
+			'singular_name' => __('Category', 'generatepress_child'),
+			'all_items' => __('All Categories', 'generatepress_child'),
+			'edit_item' => __('Edit Category', 'generatepress_child'),
+			'view_item' => __('View Category', 'generatepress_child'),
+			'update_item' => __('Update Category', 'generatepress_child'),
+			'add_new_item' => __('Add New Category', 'generatepress_child'),
+			'new_item_name' => __('New Category Name', 'generatepress_child'),
+			'search_items' => __('Search Categories', 'generatepress_child'),
+			'parent_item' => __('Parent Category', 'generatepress_child'),
+			'parent_item_colon' => __('Parent Category:', 'generatepress_child'),
+			'not_found' => __('No Categories found', 'generatepress_child'),
+		]
+	]);
+	register_taxonomy_for_object_type('product_category', 'product');
+});
