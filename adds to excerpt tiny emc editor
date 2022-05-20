@@ -1,0 +1,61 @@
+/**
+ * Replaces the default excerpt editor with TinyMCE.
+ */
+class T5_Richtext_Excerpt
+{
+    /**
+     * Replaces the meta boxes.
+     *
+     * @return void
+     */
+    public static function switch_boxes()
+    {
+        if ( ! post_type_supports( $GLOBALS['post']->post_type, 'excerpt' ) )
+        {
+            return;
+        }
+
+        remove_meta_box(
+            'postexcerpt'
+        ,   ''            
+        ,   'normal'      
+        );
+
+        add_meta_box(
+            'postexcerpt2'
+        ,   __( 'Excerpt' )
+        ,   array ( __CLASS__, 'show' )
+        ,   null
+        ,   'normal'
+        ,   'core'
+        );
+    }
+
+    public static function show( $post )
+    {
+    ?>
+        <label class="screen-reader-text" for="excerpt"><?php
+        _e( 'Excerpt' )
+        ?></label>
+        <?php
+        wp_editor(
+            self::unescape( $post->post_excerpt ),
+            'excerpt',
+            array (
+            'textarea_rows' => 15
+        ,   'media_buttons' => FALSE
+        ,   'teeny'         => TRUE
+        ,   'tinymce'       => TRUE
+            )
+        );
+    }
+
+    public static function unescape( $str )
+    {
+        return str_replace(
+            array ( '&lt;', '&gt;', '&quot;', '&amp;', '&nbsp;', '&amp;nbsp;' )
+        ,   array ( '<',    '>',    '"',      '&',     ' ', ' ' )
+        ,   $str
+        );
+    }
+}
