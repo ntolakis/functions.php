@@ -1,0 +1,9 @@
+//DISPLAY ALL THE AVAILABLE POSTS OF PROJECTS CPT IN ONE PAGE WITHOUT PAGINATION
+function custom_modify_projects_archive_query( $query ) {
+    if ( is_post_type_archive( 'projects' ) && $query->is_main_query() ) {
+        $query->set( 'posts_per_page', -1 ); // Display all "projects" posts
+        $query->set( 'orderby', 'menu_order' ); // Order by menu order
+        $query->set( 'order', 'ASC' ); // Ascending order
+    }
+}
+add_action( 'pre_get_posts', 'custom_modify_projects_archive_query' );
